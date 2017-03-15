@@ -25,6 +25,11 @@ In the header of your html page at the very begining even before other depenency
 Then in your placeholder you want to localize
 
 ```
+<i18n>
+main.text.response
+</i18n>
+<img src="test.jpeg" alt="main.image.alt|i18n"/>
+<input type="text" placeholder="main.input.placeholder|i18n"/>
 
 ```
 
