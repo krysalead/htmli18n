@@ -1,0 +1,26 @@
+{
+  "name": "htmli18n",
+  "description": "localize html static file without any dependencies on frameworks",
+  "main": "index.js",
+  "authors": [
+    "krysalead@gmail.com"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "localization",
+    "html",
+    "translation",
+    "internationnalization"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "pegasus": "^0.3.5"
+  }
+}

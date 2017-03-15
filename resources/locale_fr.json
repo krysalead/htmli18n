@@ -1,0 +1,13 @@
+{
+	"main": {
+		"title": {
+			"tutorial": "Tutorial"
+		},
+		"label": {
+			"question": "Est ce en francais ?"
+		},
+		"text": {
+			"response": "Oui il est bel et bien en francais !"
+		}
+	}
+}
