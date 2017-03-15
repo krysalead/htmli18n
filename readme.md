@@ -17,7 +17,7 @@ In the header of your html page at the very begining even before other depenency
 ```
 <head>
 	<script src="bower_components/pegasus/dist/pegasus.min.js"></script>
-	<script src="bower_components/htmli18n/js/htmli18n.js"></script>
+	<script src="bower_components/htmli18n/dist/js/htmli18n.js"></script>
 	...
 </head>
 ```
