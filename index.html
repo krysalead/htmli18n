@@ -4,7 +4,7 @@
 	<script src="bower_components/pegasus/dist/pegasus.min.js"></script>
 	<script src="src/js/htmli18n.js"></script>
 	<script>
-	i18n.init();
+	i18n.setLanguage(['fr','en'],'fr','en').init();
 	</script>
 	<title>Htmli18n</title>
 </head>
@@ -17,6 +17,8 @@
 <i18n>
 main.text.response
 </i18n>
+<img src="test.jpeg" alt="main.image.alt|i18n"/>
+<input type="text" placeholder="main.input.placeholder|i18n"/>
 </p>
 <div>
 	<i18n>main.label.keydoesntexist</i18n>
