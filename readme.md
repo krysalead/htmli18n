@@ -48,7 +48,7 @@ Go to your project directory and run
 http-server .
 ```
 
-Navigate to your html page
+[Open](http://127.0.0.1:8080) and navigate to your html page
 
 
 development
