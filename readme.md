@@ -12,7 +12,7 @@ In a terminal inside your project directory
 bower install htmli18n
 ```
 
-In the header of your html page at the very begining even before other depenency
+In the header of your html page at the very begining even before other dependency
 
 ```
 <head>
