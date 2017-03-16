@@ -33,6 +33,24 @@ main.text.response
 
 ```
 
+Test
+----
+
+We will install a simple http server
+
+```
+npm install http-server -g
+```
+
+Go to your project directory and run
+
+```
+http-server .
+```
+
+Navigate to your html page
+
+
 development
 -----------
 
