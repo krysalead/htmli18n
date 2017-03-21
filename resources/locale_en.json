@@ -4,16 +4,26 @@
 			"tutorial": "Tutorial"
 		},
 		"label": {
-			"question": "Est ce en francais ?"
+			"question": "Is it in english?",
+			"groovy": "{name} I am",
+			"person": {
+				"0": "Person",
+				"1": "{n} persons",
+				"2": "{n} persons",
+				"3": "{n} persons",
+				"n": "{n} persons",
+				"gt99": "A lot of persons"
+			}
 		},
 		"text": {
-			"response": "Oui il est bel et bien en francais !"
+			"response": "Yes it is!"
 		},
 		"input": {
-			"placeholder": "Votre email ici"
+			"placeholder": "Your email here",
+			"placeholderWithContext": "Your name here ie:{name}"
 		},
 		"image": {
-			"alt": "Validation de la librairie"
+			"alt": "This is validated"
 		}
 	}
 }

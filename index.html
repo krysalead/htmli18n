@@ -2,29 +2,47 @@
 <html>
 <head>
 	<script src="bower_components/pegasus/dist/pegasus.min.js"></script>
+	<script src="bower_components/Translate.js/build/translate.min.js"></script>
 	<script src="src/js/htmli18n.js"></script>
 	<script>
-	i18n.setLanguage(['fr','en'],'fr','en').init();
+	i18n.setLanguage(['fr','en'],'en').init();
 	</script>
 	<title>Htmli18n</title>
 </head>
 <body>
-<h1><i18n>main.title.tutorial</i18n></h1>
-<div>
-	<i18n>main.label.question</i18n>
-</div>
+<h2>Inline translation</h2>
 <p>
+<header><i18n>main.title.tutorial</i18n></header>
 <i18n>
 main.text.response
 </i18n>
-<img src="test.jpeg" alt="main.image.alt|i18n"/>
-<input type="text" placeholder="main.input.placeholder|i18n"/>
 </p>
-<div>
+<h2>Image alt and title translation</h2>
+<p>
+<img src="test.jpeg" alt="main.image.alt|i18n" title="main.image.alt|i18n"/>
+</p>
+<h2>Input placeholder</h2>
+<p>
+	<input type="text" placeholder="main.input.placeholder|i18n"/>
+</p>
+<h2>Missing key</h2>
+<p>
 	<i18n>main.label.keydoesntexist</i18n>
-</div>
-<div>
 	<i18n>mainkeydoesntexist.label.groovy</i18n>
-</div>
+</p>
+<h2>Context localization</h2>
+<p>
+	<i18n context="{name:'Yoda'}">main.label.groovy</i18n>
+	<input type="text" style="width:300px" placeholder="main.input.placeholderWithContext|i18n|{name:'Yoda'}"/>
+</p>
+<h2>Pluralization</h2>
+<p>
+	<ul>
+	<li><i18n context="0">main.label.person</i18n></li>
+	<li><i18n context="1">main.label.person</i18n></li>
+	<li><i18n context="2">main.label.person</i18n></li>
+	<li><i18n context="100">main.label.person</i18n></li>
+	</ul>
+</p>
 </body>
 </html>

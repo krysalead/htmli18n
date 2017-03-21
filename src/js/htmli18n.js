@@ -39,9 +39,9 @@ var i18n = {
 			if (data == null) {
 				try {
 					JSON.parse(request.responseText);
-					_fail("Content is not defined");
+					i18n._fail("Content is not defined");
 				} catch (e) {
-					_fail("Failed to parse the content", e);
+					i18n._fail("Failed to parse the content", e);
 				}
 
 			} else {
@@ -49,14 +49,14 @@ var i18n = {
 				i18n.localize();
 			}
 		};
-		/**
-		 * Failure to get the content
-		 */
-		var _fail = function(reason) {
-			console.error("[I18N]:" + reason);
-		};
 		var request = pegasus(path + prefix + (i18n.language || getLanguage(i18n.supported, i18n.defaultLang)) + suffix);
-		request.then(_process, _fail);
+		request.then(_process, i18n._fail);
+	},
+	/**
+	 * Failure to get the content
+	 */
+	_fail: function(reason) {
+		console.error("[I18N]:" + reason);
 	},
 	/**
 	 * Search for string inside the json object
@@ -69,11 +69,33 @@ var i18n = {
 			keys.splice(0, 0, key);
 			return "~~" + keys.join('.') + "~~";
 		}
-		if (typeof obj[key] == 'object') {
+		if (typeof obj[key] == 'object' && keys.length > 0) {
 			return this._jsonWalker(obj[key], keys.join('.'));
 		} else {
 			return obj[key];
 		}
+	},
+	/**
+	 * Check if a string is localized or not
+	 * @param {string} string to test
+	 * @returns {boolean}
+	 */
+	_isStringLocalized: function(string) {
+
+		function checker(s) {
+			//Here we check the case where the key is not existing in the translation file so that we can reuse
+			//the same function everywhere. Untranslated string are like '@lastPartOfTheKey@'
+			if (s[0] === '@' && s[s.length - 1] === '@') {
+				return false;
+			}
+			return (/\s/.test(s)) || s.indexOf('..') > -1 || s.split('.').length < 3;
+		}
+
+		var localized = true;
+		if (!string) {
+			return checker(string);
+		}
+		return false;
 	},
 	/**
 	 * To be called everytime you want to localize
@@ -82,44 +104,45 @@ var i18n = {
 		if (!i18n.strings) {
 			throw "You must call the init method first"
 		}
-
-		/**
-		 * Check if a string is localized or not
-		 * @param {string} string to test
-		 * @returns {boolean}
-		 */
-		var isStringLocalized = function(string) {
-
-			function checker(s) {
-				//Here we check the case where the key is not existing in the translation file so that we can reuse
-				//the same function everywhere. Untranslated string are like '@lastPartOfTheKey@'
-				if (s[0] === '@' && s[s.length - 1] === '@') {
-					return false;
+		var translate = function(string, context) {
+			if (context) {
+				try {
+					context = context.replace("{", "{\"").replace(":", "\":").replace("}", "}").replace(":'", ":\"").replace("'}",
+						"\"}");
+					context = JSON.parse(context);
+				} catch (e) {
+					i18n._fail("Fail to parse context for " + string, e);
 				}
-				return (/\s/.test(s)) || s.indexOf('..') > -1 || s.split('.').length < 3;
 			}
+			var translator = libTranslate.getTranslationFunction({
+				string: i18n._jsonWalker(i18n.strings, string.trim())
+			});
+			return translator('string', context != undefined ? context : {});
+		}
 
-			var localized = true;
-			if (!string) {
-				return checker(string);
+		var detectTranslation = function(string) {
+			if (string.indexOf('|i18n') > -1) {
+				var loc = string.split("|");
+				string = translate(loc[0], loc.length > 1 ? loc[2] : null);
 			}
-			return false;
-		};
+			return string;
+		}
 
 		Array.prototype.slice.call(document.getElementsByTagName('i18n')).map(function(node) {
-			if (!isStringLocalized(node.textContent)) {
-				node.textContent = i18n._jsonWalker(i18n.strings, node.textContent.trim());
+			if (!i18n._isStringLocalized(node.textContent)) {
+				node.textContent = translate(node.textContent, node.attributes['context'] ? node.attributes[
+						'context'].value :
+					null);
 			}
 		});
 		Array.prototype.slice.call(document.getElementsByTagName('input')).map(function(node) {
-			if (node.placeholder.indexOf('|i18n') > -1) {
-				node.placeholder = i18n._jsonWalker(i18n.strings, node.placeholder.split("|")[0].trim());
-			}
+			node.placeholder = detectTranslation(node.placeholder);
 		});
 		Array.prototype.slice.call(document.getElementsByTagName('img')).map(function(node) {
-			if (node.alt.indexOf('|i18n') > -1) {
-				node.alt = i18n._jsonWalker(i18n.strings, node.alt.split("|")[0].trim());
-			}
+			node.alt = detectTranslation(node.alt);
+		});
+		Array.prototype.slice.call(document.getElementsByTagName('img')).map(function(node) {
+			node.title = detectTranslation(node.title);
 		});
 	}
 

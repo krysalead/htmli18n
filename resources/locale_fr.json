@@ -4,13 +4,23 @@
 			"tutorial": "Tutorial"
 		},
 		"label": {
-			"question": "Est ce en francais ?"
+			"question": "Est ce en francais ?",
+			"groovy": "Je suis {name}",
+			"person": {
+				"0": "Persone",
+				"1": "{n} personnes",
+				"2": "{n} personnes",
+				"3": "{n} personnes",
+				"n": "{n} personnes",
+				"gt99": "Beaucoup de monde"
+			}
 		},
 		"text": {
 			"response": "Oui il est bel et bien en francais !"
 		},
 		"input": {
-			"placeholder": "Votre email ici"
+			"placeholder": "Votre email ici",
+			"placeholderWithContext": "Votre nom ici exemple : {name}"
 		},
 		"image": {
 			"alt": "Validation de la librairie"

@@ -1,6 +1,6 @@
 {
 	"name": "htmli18n",
-	"version": "1.0.0",
+	"version": "1.1.0",
 	"description": "localize html static file without any dependencies on frameworks",
 	"main": "index.js",
 	"scripts": {
