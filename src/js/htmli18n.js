@@ -138,12 +138,20 @@ var i18n = {
 		Array.prototype.slice.call(document.getElementsByTagName('input')).map(function(node) {
 			node.placeholder = detectTranslation(node.placeholder);
 		});
+		Array.prototype.slice.call(document.getElementsByTagName('textarea')).map(function(node) {
+			node.placeholder = detectTranslation(node.placeholder);
+		});
 		Array.prototype.slice.call(document.getElementsByTagName('img')).map(function(node) {
 			node.alt = detectTranslation(node.alt);
 		});
 		Array.prototype.slice.call(document.getElementsByTagName('img')).map(function(node) {
 			node.title = detectTranslation(node.title);
 		});
+		Array.prototype.slice.call(document.getElementsByTagName('img')).filter(function(node){
+	      return node.attributes['i18n-src'] !== undefined;
+	    }).map(function(node) {
+	      node.src = detectTranslation(node.attributes['i18n-src'].value);
+	    });
 	}
 
 };

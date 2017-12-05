@@ -35,7 +35,7 @@ Then in your placeholder you want to localize
 <i18n>
 main.text.response
 </i18n>
-<img src="test.jpeg" alt="main.image.alt|i18n"/>
+<img i18n-src="main.image.src|i18n" alt="main.image.alt|i18n"/>
 <input type="text" placeholder="main.input.placeholder|i18n"/>
 ```
 
@@ -68,7 +68,8 @@ locale_en.json and do the same for all the language you want to support
 			"placeholder": "Your email here"
 		},
 		"image": {
-			"alt": "This is validated"
+			"alt": "This is validated",
+			"src":"img/fancy_en.png"
 		}
 	}
 }
