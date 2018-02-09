@@ -18,5 +18,5 @@ gulp.task('jsmin', function() {
 
 // Gulp Build Task
 gulp.task('build', function() {
-	runSequence('clean', 'jsmin');
+	runSequence(['clean', 'jsmin']);
 });

@@ -9,17 +9,17 @@ var i18n = {
 	 * @param {string} language free format
 	 * @return this
 	 */
-	setLanguage: function(supported,
+	setLanguage: function (supported,
 		defaultLang, ln) {
 		i18n.language = ln;
 		i18n.defaultLang = defaultLang || 'en';
 		i18n.supported = supported || ['en'];
-		return this;
+		return i18n;
 	},
 	/**
 	 * This method must be called first it will load the content in // to other requests
 	 */
-	init: function(path, prefix, suffix) {
+	init: function (path, prefix, suffix) {
 		//Default the parameters
 		path = path || 'resources/';
 		prefix = prefix || 'locale_';
@@ -27,7 +27,7 @@ var i18n = {
 		/*
 		 * Detect the language of the browser
 		 */
-		var getLanguage = function(supported, defaultLang) {
+		var getLanguage = function (supported, defaultLang) {
 			var lang = window.navigator.userLanguage || window.navigator.language;
 			lang = lang.length > 2 ? lang.split("-")[0] : lang;
 			return supported.indexOf(lang) > -1 ? lang : defaultLang;
@@ -35,7 +35,7 @@ var i18n = {
 		/**
 		 * This method must be called only once the init method is completed
 		 */
-		var _process = function(data, request) {
+		var _process = function (data, request) {
 			if (data == null) {
 				try {
 					JSON.parse(request.responseText);
@@ -46,7 +46,12 @@ var i18n = {
 
 			} else {
 				i18n.strings = data;
-				i18n.localize();
+				if (document.readyState === "complete") {
+					i18n.localize();
+				} else {
+					window[window.addEventListener ? 'addEventListener' : 'attachEvent'](
+						window.addEventListener ? "load" : "onload", i18n.localize, false);
+				}
 			}
 		};
 		var request = pegasus(path + prefix + (i18n.language || getLanguage(i18n.supported, i18n.defaultLang)) + suffix);
@@ -55,13 +60,13 @@ var i18n = {
 	/**
 	 * Failure to get the content
 	 */
-	_fail: function(reason) {
+	_fail: function (reason) {
 		console.error("[I18N]:" + reason);
 	},
 	/**
 	 * Search for string inside the json object
 	 */
-	_jsonWalker: function(obj, key) {
+	_jsonWalker: function (obj, key) {
 		var keys = key.split('.');
 		key = keys.shift();
 		if (obj == undefined || obj[key] == undefined) {
@@ -70,7 +75,7 @@ var i18n = {
 			return "~~" + keys.join('.') + "~~";
 		}
 		if (typeof obj[key] == 'object' && keys.length > 0) {
-			return this._jsonWalker(obj[key], keys.join('.'));
+			return i18n._jsonWalker(obj[key], keys.join('.'));
 		} else {
 			return obj[key];
 		}
@@ -80,7 +85,7 @@ var i18n = {
 	 * @param {string} string to test
 	 * @returns {boolean}
 	 */
-	_isStringLocalized: function(string) {
+	_isStringLocalized: function (string) {
 
 		function checker(s) {
 			//Here we check the case where the key is not existing in the translation file so that we can reuse
@@ -100,11 +105,11 @@ var i18n = {
 	/**
 	 * To be called everytime you want to localize
 	 */
-	localize: function() {
+	localize: function () {
 		if (!i18n.strings) {
 			throw "You must call the init method first"
 		}
-		var translate = function(string, context) {
+		var translate = function (string, context) {
 			if (context) {
 				try {
 					context = context.replace("{", "{\"").replace(":", "\":").replace("}", "}").replace(":'", ":\"").replace("'}",
@@ -120,7 +125,7 @@ var i18n = {
 			return translator('string', context != undefined ? context : {});
 		}
 
-		var detectTranslation = function(string) {
+		var detectTranslation = function (string) {
 			if (string.indexOf('|i18n') > -1) {
 				var loc = string.split("|");
 				string = translate(loc[0], loc.length > 1 ? loc[2] : null);
@@ -128,36 +133,36 @@ var i18n = {
 			return string;
 		}
 
-		Array.prototype.slice.call(document.getElementsByTagName('i18n')).map(function(node) {
+		Array.prototype.slice.call(document.getElementsByTagName('i18n')).map(function (node) {
 			if (!i18n._isStringLocalized(node.textContent)) {
 				node.textContent = translate(node.textContent, node.attributes['context'] ? node.attributes[
-						'context'].value :
+					'context'].value :
 					null);
 			}
 		});
-		Array.prototype.slice.call(document.getElementsByTagName('input')).map(function(node) {
+		Array.prototype.slice.call(document.getElementsByTagName('input')).map(function (node) {
 			node.placeholder = detectTranslation(node.placeholder);
 		});
-		Array.prototype.slice.call(document.getElementsByTagName('textarea')).map(function(node) {
+		Array.prototype.slice.call(document.getElementsByTagName('textarea')).map(function (node) {
 			node.placeholder = detectTranslation(node.placeholder);
 		});
-		Array.prototype.slice.call(document.getElementsByTagName('img')).map(function(node) {
+		Array.prototype.slice.call(document.getElementsByTagName('img')).map(function (node) {
 			node.alt = detectTranslation(node.alt);
 		});
-		Array.prototype.slice.call(document.getElementsByTagName('img')).map(function(node) {
+		Array.prototype.slice.call(document.getElementsByTagName('img')).map(function (node) {
 			node.title = detectTranslation(node.title);
 		});
-		Array.prototype.slice.call(document.getElementsByTagName('img')).filter(function(node){
-	      return node.attributes['i18n-src'] !== undefined;
-	    }).map(function(node) {
-	      node.src = detectTranslation(node.attributes['i18n-src'].value);
-	    });
+		Array.prototype.slice.call(document.getElementsByTagName('img')).filter(function (node) {
+			return node.attributes['i18n-src'] !== undefined;
+		}).map(function (node) {
+			node.src = detectTranslation(node.attributes['i18n-src'].value);
+		});
 	}
 
 };
 //Add a trim function if not existing
 if (!String.prototype.trim) {
-	String.prototype.trim = function() {
+	String.prototype.trim = function () {
 		return this.replace(/^\s+|\s+$/g, '');
 	}
 }
