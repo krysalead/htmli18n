@@ -1,10 +1,8 @@
-HTML i18n
-=========
+# HTML i18n
 
 This library allows to localize an html file using javascript an external content file
 
-Getting Started
----------------
+## Getting Started
 
 In a terminal inside your project directory
 
@@ -32,6 +30,7 @@ This method will inject the information of your web application about supported 
 Then in your placeholder you want to localize
 
 ```
+<i18n key="main.text.somethingElse">SEO can read that</i18n>
 <i18n>
 main.text.response
 </i18n>
@@ -77,10 +76,10 @@ locale_en.json and do the same for all the language you want to support
 
 Live test [here](http://codepen.io/anon/pen/PpQpLa)
 
-Advanced
---------
+## Advanced
 
 The localization library support also the contextualization
+
 ```
 <i18n context="{name:'Yoda'}">main.label.groovy</i18n>
 <i18n context="0">main.label.person</i18n>
@@ -88,8 +87,7 @@ The localization library support also the contextualization
 
 [(]read more](https://github.com/musterknabe/translate.js)
 
-Test
-----
+## Test
 
 We will install a simple http server
 
@@ -105,17 +103,15 @@ http-server .
 
 [Open](http://127.0.0.1:8080) and navigate to your html page
 
+## development
 
-development
------------
-
-* build
+- build
 
 ```
 gulp
 ```
 
-* run
+- run
 
 ```
 npm install http-server -g

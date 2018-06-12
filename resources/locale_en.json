@@ -1,29 +1,30 @@
 {
-	"main": {
-		"title": {
-			"tutorial": "Tutorial"
-		},
-		"label": {
-			"question": "Is it in english?",
-			"groovy": "{name} I am",
-			"person": {
-				"0": "Person",
-				"1": "{n} persons",
-				"2": "{n} persons",
-				"3": "{n} persons",
-				"n": "{n} persons",
-				"gt99": "A lot of persons"
-			}
-		},
-		"text": {
-			"response": "Yes it is!"
-		},
-		"input": {
-			"placeholder": "Your email here",
-			"placeholderWithContext": "Your name here ie:{name}"
-		},
-		"image": {
-			"alt": "This is validated"
-		}
-	}
+  "main": {
+    "title": {
+      "tutorial": "Tutorial"
+    },
+    "label": {
+      "defaultPlaceholder": "I am replacing the default text",
+      "question": "Is it in english?",
+      "groovy": "{name} I am",
+      "person": {
+        "0": "Person",
+        "1": "{n} persons",
+        "2": "{n} persons",
+        "3": "{n} persons",
+        "n": "{n} persons",
+        "gt99": "A lot of persons"
+      }
+    },
+    "text": {
+      "response": "Yes it is!"
+    },
+    "input": {
+      "placeholder": "Your email here",
+      "placeholderWithContext": "Your name here ie:{name}"
+    },
+    "image": {
+      "alt": "This is validated"
+    }
+  }
 }
