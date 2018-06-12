@@ -88,7 +88,7 @@ var i18n = {
   _isStringLocalized: function (string) {
 
     function checker(s) {
-      s = s.replace(/\r/g, '').replace(/\n/g, '').replace(/^ +/, '').replace(/ +$/, '');
+      s = s.replace(/\r/g, '').replace(/\n/g, '').trim();
       return (/\s/.test(s)) || s.indexOf('..') > -1 || s.split('.').length < 3;
     }
 
