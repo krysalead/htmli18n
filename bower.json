@@ -1,7 +1,7 @@
 {
   "name": "htmli18n",
   "description": "localize html static file without any dependencies on frameworks",
-  "main": "index.js",
+  "main": "dist/js/htmli18n.js",
   "authors": [
     "krysalead@gmail.com"
   ],
