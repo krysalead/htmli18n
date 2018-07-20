@@ -131,11 +131,11 @@ var i18n = {
 
     Array.prototype.slice.call(document.getElementsByTagName('i18n')).map(function (node) {
       if (!i18n._isStringLocalized(node.textContent)) {
-        node.textContent = translate(node.textContent, node.attributes.context ? node.attributes.context.value :
+        node.innerHTML = translate(node.textContent, node.attributes.context ? node.attributes.context.value :
           null);
       } else {
         if (node.attributes.key) {
-          node.textContent = translate(node.attributes.key.value, node.attributes.context ? node.attributes.context.value :
+          node.innerHTML = translate(node.attributes.key.value, node.attributes.context ? node.attributes.context.value :
             null);
         }
       }
